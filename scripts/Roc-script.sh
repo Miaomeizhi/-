@@ -2,19 +2,25 @@
 sed -i 's/192.168.1.1/192.168.8.1/g' package/base-files/files/bin/config_generate
 sed -i "s/hostname='.*'/hostname='test2'/g" package/base-files/files/bin/config_generate
 #sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ Built by test4-1')/g" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+#copy代码
+WIFI_SH=$(find ./target/linux/{mediatek/filogic,qualcommax}/base-files/etc/uci-defaults/ -type f -name "*set-wireless.sh" 2>/dev/null)
+WIFI_UC="./package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc"
+if [ -f "$WIFI_SH" ]; then
+	#修改WIFI名称
+	sed -i "s/BASE_SSID='.*'/BASE_SSID='$WRT_SSID'/g" $WIFI_SH
+	#修改WIFI密码
+	sed -i "s/BASE_WORD='.*'/BASE_WORD='$1234567899'/g" $WIFI_SH
+elif [ -f "$WIFI_UC" ]; then
+	#修改WIFI名称
+	sed -i "s/ssid='.*'/ssid='$WRT_SSID'/g" $WIFI_UC
+	#修改WIFI密码
+	sed -i "s/key='.*'/key='$12345678999'/g" $WIFI_UC
+	#修改WIFI地区
+	sed -i "s/country='.*'/country='CN'/g" $WIFI_UC
+	#修改WIFI加密
+	sed -i "s/encryption='.*'/encryption='psk2+ccmp'/g" $WIFI_UC
+fi
 
-# 修改 2.4G 默认 Wi-Fi 名称 (SSID)
-sed -i "s/set wireless.radio\${devidx}.ssid=.*/set wireless.radio\${devidx}.ssid='test3-2.4G'/g" package/kernel/mac80211/files/lib/wifi/mac80211.sh
-# 修改 5G 默认 Wi-Fi 名称 (SSID)
-sed -i "s/set wireless.default_radio\${devidx}.ssid=.*/set wireless.default_radio\${devidx}.ssid='test3-5G'/g" package/kernel/mac80211/files/lib/wifi/mac80211.sh
-# 修改默认 Wi-Fi 密码
-sed -i "s/set wireless.default_radio\${devidx}.key=.*/set wireless.default_radio\${devidx}.key='root'/g" package/kernel/mac80211/files/lib/wifi/mac80211.sh
-
-#修改默认 Web 登录密码
-# 生成加密后的密码 (例如: root)
-encrypted_pw=$(echo -n 'root' | openssl passwd -1 -stdin)
-# 替换默认 root 密码
-sed -i "s/root::0:0:99999:7:::/root:${encrypted_pw}:0:0:99999:7:::/g" package/base-files/files/etc/shadow
 
 # 修正使用ccache编译vlmcsd的问题
 mkdir -p feeds/packages/net/vlmcsd/patches
