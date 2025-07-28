@@ -10,6 +10,12 @@ sed -i "s/set wireless.default_radio\${devidx}.ssid=.*/set wireless.default_radi
 # 修改默认 Wi-Fi 密码
 sed -i "s/set wireless.default_radio\${devidx}.key=.*/set wireless.default_radio\${devidx}.key='root'/g" package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
+#修改默认 Web 登录密码
+# 生成加密后的密码 (例如: root)
+encrypted_pw=$(echo -n 'root' | openssl passwd -1 -stdin)
+# 替换默认 root 密码
+sed -i "s/root::0:0:99999:7:::/root:${encrypted_pw}:0:0:99999:7:::/g" package/base-files/files/etc/shadow
+
 # 修正使用ccache编译vlmcsd的问题
 mkdir -p feeds/packages/net/vlmcsd/patches
 cp -f $GITHUB_WORKSPACE/patches/fix_vlmcsd_compile_with_ccache.patch feeds/packages/net/vlmcsd/patches
