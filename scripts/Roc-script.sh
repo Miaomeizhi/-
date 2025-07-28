@@ -1,7 +1,14 @@
-# 修改默认IP & 固件名称 & 编译署名
+# 修改默认IP & 固件名称-主机名 & 编译署名
 sed -i 's/192.168.1.1/192.168.8.1/g' package/base-files/files/bin/config_generate
 sed -i "s/hostname='.*'/hostname='test2'/g" package/base-files/files/bin/config_generate
 sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ Built by test2-2')/g" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+
+# 修改 2.4G 默认 Wi-Fi 名称 (SSID)
+sed -i "s/set wireless.radio\${devidx}.ssid=.*/set wireless.radio\${devidx}.ssid='test3-2.4G'/g" package/kernel/mac80211/files/lib/wifi/mac80211.sh
+# 修改 5G 默认 Wi-Fi 名称 (SSID)
+sed -i "s/set wireless.default_radio\${devidx}.ssid=.*/set wireless.default_radio\${devidx}.ssid='test3-5G'/g" package/kernel/mac80211/files/lib/wifi/mac80211.sh
+# 修改默认 Wi-Fi 密码
+sed -i "s/set wireless.default_radio\${devidx}.key=.*/set wireless.default_radio\${devidx}.key='root'/g" package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 # 修正使用ccache编译vlmcsd的问题
 mkdir -p feeds/packages/net/vlmcsd/patches
