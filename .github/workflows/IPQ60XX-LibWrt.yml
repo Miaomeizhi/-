@@ -156,8 +156,13 @@ jobs:
       run: |
         cd $OPENWRT_PATH/bin/targets/*/*
         cp $OPENWRT_PATH/.config ipq60xx.config
+        if grep -q "CONFIG_USE_APK=y" ipq60xx.config; then
+          SUFFIX="apk"
+        else
+          SUFFIX="ipk"
+        fi
         mv config.buildinfo ipq60xx.config.buildinfo
-        mv -f $OPENWRT_PATH/bin/packages/*/*/*.apk packages
+        mv -f $OPENWRT_PATH/bin/packages/*/*/*.$SUFFIX packages
         tar -zcf ipq60xx.Packages.tar.gz packages
         rm -rf packages feeds.buildinfo version.buildinfo sha256sums profiles.json
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
