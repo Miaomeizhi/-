@@ -1,9 +1,9 @@
 # 修改默认IP & 固件名称-主机名 & 编译署名
 sed -i 's/192.168.1.1/192.168.5.1/g' package/base-files/files/bin/config_generate
-sed -i "s/hostname='.*'/hostname='test2'/g" package/base-files/files/bin/config_generate
+sed -i "s/hostname='.*'/hostname='Xbenben'/g" package/base-files/files/bin/config_generate
 #sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ Built by test4-1')/g" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
 #修改WIFI名称
-sed -i "s/BASE_SSID='.*'/BASE_SSID='test5'/g" target/linux/qualcommax/base-files/etc/uci-defaults/990_set-wireless.sh
+sed -i "s/BASE_SSID='.*'/BASE_SSID='宫廷玉液酒'/g" target/linux/qualcommax/base-files/etc/uci-defaults/990_set-wireless.sh
 #修改WIFI密码
 sed -i "s/BASE_WORD='.*'/BASE_WORD='12345678999'/g" target/linux/qualcommax/base-files/etc/uci-defaults/990_set-wireless.sh
 
