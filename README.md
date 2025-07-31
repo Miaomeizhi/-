@@ -14,3 +14,4 @@
 4. 如需修改默认 IP、添加或删除插件包以及一些其他设置请在 `Roc-script.sh` 文件内修改
 5. 添加或修改 `xx.yml` 文件，最后点击 `Actions   行动` 运行要编译的 `workflow   工作流` 即可开始编译
 6. 编译大概需要1-2小时，编译完成后在仓库主页 [Releases   释放](https://github.com/laipeng668/openwrt-ci-roc/releases) 对应 Tag 标签内下载固件
+7. 软件管理可以从apk改回opkg，只需在General.config文件里面插入CONFIG_USE_APK=n
