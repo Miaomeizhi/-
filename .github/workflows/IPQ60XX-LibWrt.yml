@@ -187,7 +187,7 @@ jobs:
           **This is OpenWrt Firmware for ${{ env.FIRMWARE_TAG }}**
           ### 📒 固件信息-较纯净版-test-待学习修改初始登录密码-可额外添加ipv6
           - 这是开启全功能NSS的6.12内核固件，默认主题为Argon；该固件在ImmortalWrt的基础上，添加了额外的软件包nlbwmon、ttyd、adguardhome，添加了usb驱动包，并添加了若干工具，具体详见IPQ60XX.config
-          删除了有问题的diskman删除编译署名。PS：修复ssh问题——bash未安装。
+          删除了有问题的diskman删除编译署名。PS：修复ssh问题——bash未安装，修改在编译过程中对软件管理使用opkg禁用apk的逻辑判断。
           - 💻 这是 ${{ env.FIRMWARE_TAG }} 平台使用的 OpenWrt 固件
           - ⚽ 固件源码: ${{ env.REPO_URL }}
           - 💝 源码分支: ${{ env.REPO_BRANCH }}
